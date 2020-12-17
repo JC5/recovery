@@ -1,5 +1,5 @@
 {
-    "name": "pragmarx/recovery",
+    "name": "jc5/recovery",
     "type": "library",
     "description": "Create recovery codes for two factor auth",
     "keywords": [
@@ -13,7 +13,7 @@
         "recovery codes",
         "backup codes"
     ],
-    "homepage": "https://github.com/antonioribeiro/recovery",
+    "homepage": "https://github.com/JC5/recovery",
     "license": "MIT",
     "authors": [
         {
@@ -21,11 +21,18 @@
             "email": "acr@antoniocarlosribeiro.com",
             "homepage": "https://antoniocarlosribeiro.com",
             "role": "Developer"
+        },
+        {
+            "name": "James Cole",
+            "email": "james@firefly-iii.org",
+            "homepage": "https://firefly-iii.org/",
+            "role": "Developer"
         }
     ],
     "require": {
-        "php" : "~7.0",
-        "pragmarx/random" : "~0.1"
+        "php" : "^7.4|^8.0",
+        "pragmarx/random" : "~0.1",
+        "ext-json": "*"
     },
     "require-dev": {
         "phpunit/phpunit" : ">=5.4.3",
