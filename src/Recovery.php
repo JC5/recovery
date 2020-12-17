@@ -3,22 +3,26 @@
 namespace PragmaRX\Recovery;
 
 use PragmaRX\Random\Random;
+use JsonException;
 
+/**
+ * Class Recovery
+ */
 class Recovery
 {
-    protected $codes = [];
+    protected array $codes = [];
 
-    protected $count = 8;
+    protected int $count = 8;
 
-    protected $blocks = 2;
+    protected int $blocks = 2;
 
-    protected $chars = 10;
+    protected int $chars = 10;
 
     protected $random;
 
-    protected $blockSeparator = '-';
+    protected string $blockSeparator = '-';
 
-    private $collectionFunction = 'collect';
+    private string $collectionFunction = 'collect';
 
     /**
      * Recovery constructor.
@@ -39,7 +43,7 @@ class Recovery
      *
      * @return Recovery
      */
-    public function alpha()
+    public function alpha(): Recovery
     {
         $this->random->alpha();
 
@@ -51,7 +55,7 @@ class Recovery
      *
      * @return array
      */
-    protected function generate()
+    protected function generate(): array
     {
         $this->reset();
 
@@ -67,7 +71,7 @@ class Recovery
      *
      * @return array
      */
-    protected function generateBlocks()
+    protected function generateBlocks(): array
     {
         $blocks = [];
 
@@ -83,7 +87,7 @@ class Recovery
      *
      * @return string
      */
-    protected function generateChars()
+    protected function generateChars(): string
     {
         return $this->random->size($this->getChars())->get();
     }
@@ -93,7 +97,7 @@ class Recovery
      *
      * @return bool
      */
-    protected function mustGenerate()
+    protected function mustGenerate(): bool
     {
         return count($this->codes) == 0;
     }
@@ -104,7 +108,7 @@ class Recovery
      * @param bool $state
      * @return Recovery
      */
-    public function lowercase($state = true)
+    public function lowercase($state = true): self
     {
         $this->random->lowercase($state);
 
@@ -117,7 +121,7 @@ class Recovery
      * @param string $blockSeparator
      * @return Recovery
      */
-    public function setBlockSeparator($blockSeparator)
+    public function setBlockSeparator($blockSeparator): self
     {
         $this->blockSeparator = $blockSeparator;
 
@@ -130,7 +134,7 @@ class Recovery
      * @param string $collectionFunction
      * @return Recovery
      */
-    public function collectionFunction($collectionFunction)
+    public function collectionFunction($collectionFunction): self
     {
         $this->collectionFunction = $collectionFunction;
 
@@ -143,7 +147,7 @@ class Recovery
      * @param bool $state
      * @return Recovery
      */
-    public function uppercase($state = true)
+    public function uppercase($state = true): self
     {
         $this->random->uppercase($state);
 
@@ -155,7 +159,7 @@ class Recovery
      *
      * @return Recovery
      */
-    public function mixedcase()
+    public function mixedcase(): self
     {
         $this->random->mixedcase();
 
@@ -167,7 +171,7 @@ class Recovery
      *
      * @return Recovery
      */
-    public function numeric()
+    public function numeric(): self
     {
         $this->random->numeric();
 
@@ -179,7 +183,7 @@ class Recovery
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         if ($this->mustGenerate()) {
             return $this->generate();
@@ -194,7 +198,7 @@ class Recovery
      * @return array
      * @throws \Exception
      */
-    public function toCollection()
+    public function toCollection(): array
     {
         if (function_exists($this->collectionFunction)) {
             return call_user_func($this->collectionFunction, $this->toArray());
@@ -209,11 +213,12 @@ class Recovery
     /**
      * Get a json of recovery codes.
      *
-     * @return array
+     * @return string
+     * @throws JsonException
      */
-    public function toJson()
+    public function toJson(): string
     {
-        return json_encode($this->toArray());
+        return json_encode($this->toArray(), JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -221,7 +226,7 @@ class Recovery
      *
      * @return int
      */
-    public function getBlocks()
+    public function getBlocks(): int
     {
         return $this->blocks;
     }
@@ -231,7 +236,7 @@ class Recovery
      *
      * @return int
      */
-    public function getChars()
+    public function getChars(): int
     {
         return $this->chars;
     }
@@ -241,7 +246,7 @@ class Recovery
      *
      * @return array
      */
-    public function getCodes()
+    public function getCodes(): array
     {
         return $this->codes;
     }
@@ -251,7 +256,7 @@ class Recovery
      *
      * @return int
      */
-    public function getCount()
+    public function getCount(): int
     {
         return $this->count;
     }
@@ -260,7 +265,7 @@ class Recovery
      * Reset generated codes.
      *
      */
-    protected function reset()
+    protected function reset(): void
     {
         $this->codes = [];
     }
@@ -271,7 +276,7 @@ class Recovery
      * @param int $blocks
      * @return Recovery
      */
-    public function setBlocks($blocks)
+    public function setBlocks(int $blocks): self
     {
         $this->blocks = $blocks;
 
@@ -286,7 +291,7 @@ class Recovery
      * @param int $chars
      * @return Recovery
      */
-    public function setChars($chars)
+    public function setChars(int $chars): self
     {
         $this->chars = $chars;
 
@@ -301,7 +306,7 @@ class Recovery
      * @param int $count
      * @return Recovery
      */
-    public function setCount($count)
+    public function setCount(int $count): self
     {
         $this->count = $count;
 
