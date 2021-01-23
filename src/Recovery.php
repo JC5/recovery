@@ -69,9 +69,9 @@ class Recovery
     /**
      * Generate all blocks.
      *
-     * @return array
+     * @return string
      */
-    protected function generateBlocks(): array
+    protected function generateBlocks(): string
     {
         $blocks = [];
 
