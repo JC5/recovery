@@ -6,7 +6,7 @@ use PragmaRX\Random\Random;
 
 class RecoveryTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->recovery = new Recovery(new Random());
     }
